@@ -1,1 +1,3 @@
-# 100millionPoWillFallFromTheSky
+# 空から降る一億のポ
+
+降ってきます、一億個。
