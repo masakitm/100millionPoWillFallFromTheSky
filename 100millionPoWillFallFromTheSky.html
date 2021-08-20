@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>空から降る一億のポ</title>
+  <style>
+    .po {
+      position: absolute;
+      top: 0;
+      left: 0;
+      animation: po;
+      animation-duration: 0ms;
+      transform: translate(-50%, -100vh);
+      line-height: 1;
+    }
+
+    @keyframes po {
+      0% {
+        top: 0
+      }
+
+      100% {
+        top: 0%;
+        transform: translate(-50%, 100vh);
+      }
+    }
+
+    .counter {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      opacity: 0.1;
+      transform: translate(-50%,-50%);
+      font-size: 2rem;
+    }
+
+    .opening {
+      font-size: 5rem;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      animation: opening;
+      animation-duration: 5000ms;
+      transform: translate(-50%, -50%);
+    }
+
+    @keyframes opening {
+      0% {
+        opacity: 0;
+      }
+
+      30% {
+        opacity: 1;
+      }
+
+      70% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div
+    title="空から降る一億のポ"
+    id="root"
+  >
+  </div>
+
+  <script>
+  const root = document.querySelector('#root')
+
+  function createOpening () {
+    const opening = document.createElement('h1')
+    opening.textContent = '空から降る一億のポ'
+    opening.setAttribute('class', 'opening')
+    return opening
+  }
+
+  function po() {
+    let count = 0
+    const counter = document.createElement('div')
+    counter.setAttribute('class', 'counter')
+    counter.textContent = 0
+    root.appendChild(counter)
+
+    const getRandomArbitrary = (min, max) => {
+      return Math.random() * (max - min) + min;
+    }
+
+    const createPo = () => {
+      const po = document.createElement('div')
+      po.textContent = 'ポ'
+      po.style.fontSize = `${getRandomArbitrary(5, 90)}vw`
+      po.style.left = `${getRandomArbitrary(0, 100)}%`
+      po.setAttribute('class', 'po')
+
+      return po
+    }
+
+    const addPoToRoot = () => {
+      if (count >= 100000000) {
+        clearInterval(fallPo)
+        return
+      }
+
+      const time = getRandomArbitrary(10, 6000)
+      const currentPo = createPo()
+      currentPo.style.animationDuration = `${time}ms`
+
+      root.appendChild(currentPo)
+      count++
+
+      setTimeout(() => {
+        root.removeChild(currentPo)
+        counter.textContent = count
+      }, time)
+    }
+
+    const fallPo = setInterval(addPoToRoot, 500)
+  }
+
+  function setup () {
+    const opening = createOpening()
+    root.appendChild(opening)
+
+    setTimeout(() => {
+      root.removeChild(opening)
+      po()
+    }, 5000)
+  }
+
+  setup()
+  </script>
+</body>
+</html>
